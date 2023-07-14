@@ -35,7 +35,7 @@ docker run --gpus all -d --name counsel-gpt -p 8080:8080  counsel-gpt:latest
 
 ```
 
-### 软件需求
+## 软件需求
 
 本项目已在 Python 3.8.1 - 3.10，CUDA 11.7 环境下完成测试。已在 Windows、ARM 架构的 macOS、Linux 系统中完成测试。
 
@@ -47,32 +47,43 @@ Web UI 可以实现如下功能：
 4. 添加 `配置知识库` 功能，支持选择已有知识库或新建知识库，并可向知识库中**新增**上传文件/文件夹，使用文件上传组件选择好文件后点击 `上传文件并加载知识库`，会将所选上传文档数据加载至知识库中，并基于更新后知识库进行问答；
 5. 新增 `知识库检索` Tab，可用于测试不同文本切分方法与检索相关度阈值设置。
 
-# 如何制作docker镜像
+## 如何制作docker镜像
 
->1. 构造镜像
+1. 构造镜像
+
 docker build -f Dockerfile -t counsel-gpt:latest .
 
->2. 登陆阿里云镜像管理器
+2. 登陆阿里云镜像管理器
+
 docker login --username=losesky77 registry.cn-shenzhen.aliyuncs.com
 
->3. 将刚才构建的镜像标记版本
+3. 将刚才构建的镜像标记版本
+
 docker tag counsel-gpt:latest registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
 
->4. 将标记版本的镜像上传阿里云镜像管理器
+4. 将标记版本的镜像上传阿里云镜像管理器
+   
 docker push registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
 
-# 清理系统相关命令
+## 清理系统相关命令
 
 sudo docker system prune
+
 sudo docker container ls -a
+
 sudo docker image ls -a
+
 sudo docker container rm <container_id>
+
 sudo docker image rm <image_id>
+
 sudo apt-get clean
+
 sudo apt-get autoclean
+
 sudo apt-get autoremove
 
-# 最简单方式
+## 最简单方式
 
 ./clear_docker.sh
 
