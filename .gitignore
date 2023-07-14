@@ -166,6 +166,7 @@ output/*
 log/*
 .chroma
 vector_store/*
+nltk_data/*
 content/*
 api_content/*
 knowledge_base/*
