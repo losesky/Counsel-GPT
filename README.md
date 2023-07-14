@@ -1,5 +1,5 @@
 
-### Counsel-GPT - 基于本地知识库的 langchain + ChatGLM2-6B 的大语言模型在法律问答方面的应用实现
+# Counsel-GPT - 基于本地知识库的 langchain + ChatGLM2-6B 的大语言模型在法律问答方面的应用实现
 
 ## 基本介绍
 
