@@ -7,10 +7,6 @@
 # 3. Stop Docker service.
 # 4. Remove Docker data directory and its contents.
 # 5. Clean up unnecessary packages and dependencies.
-# 6. Set safe directory for Git to prevent accidental pushes to protected branches.
-# 7. Check and set the database configuration based on the environment.
-# 8. Start Docker service.
-# 9. Run Docker Compose to bring up the containers defined in the docker-compose.yaml file.
 
 # Remove all unused Docker resources
 sudo docker system prune
@@ -35,11 +31,5 @@ sudo apt-get clean
 sudo apt-get autoclean
 sudo apt-get autoremove
 
-# Add safe directory for Git to prevent accidental pushes to protected branches
-# git config --global --add safe.directory .
-
-# Start Docker containers in detached mode
-# docker-compose up -d
-
 # Print message indicating script has finished
-echo "Docker-compose setup is finished."
+echo "Docker clear is finished."
