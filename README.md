@@ -1,5 +1,5 @@
 
-## Counsel-GPT - 基于本地知识库的 langchain + ChatGLM2-6B-int4 的大语言模型在法律方面的应用实现
+### Counsel-GPT - 基于本地知识库的 langchain + ChatGLM2-6B 的大语言模型在法律问答方面的应用实现
 
 ## 基本介绍
 
@@ -42,7 +42,7 @@ docker run --gpus all -d --name counsel-gpt -p 8080:8080  counsel-gpt:latest
 
 WebUI 可以实现如下功能：
 
-1. 运行前自动读取`configs/model_config.py`中`LLM`及`Embedding`模型枚举及默认模型设置运行模型，如需重新加载模型，可在 `模型配置` Tab 重新选择后点击 `重新加载模型` 进行模型加载
+1. 运行前自动读取 `configs/model_config.py` 中 `LLM` 及 `Embedding` 模型枚举及默认模型设置运行模型，如需重新加载模型，可在 `模型配置` Tab 重新选择后点击 `重新加载模型` 进行模型加载
    
 2. 可手动调节对话历史长度、匹配知识库文段数量，可根据显存大小自行调节
    
