@@ -173,6 +173,8 @@ knowledge_base/*
 
 package/*
 
+clear_docker.sh
 pyrightconfig.json
+
 loader/tmp_files
 flagged/*
