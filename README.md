@@ -28,6 +28,7 @@ sudo apt-get install -y nvidia-container-toolkit-base
 sudo systemctl daemon-reload 
 sudo systemctl restart docker
 ```
+
 安装完成后，可以使用以下命令编译镜像和启动容器：
 ```
 docker build -f Dockerfile -t counsel-gpt:latest .
@@ -50,23 +51,27 @@ Web UI 可以实现如下功能：
 ## 如何制作docker镜像
 
 1. 构造镜像
-
+```
 docker build -f Dockerfile -t counsel-gpt:latest .
+```
 
 2. 登陆阿里云镜像管理器
-
+```
 docker login --username=losesky77 registry.cn-shenzhen.aliyuncs.com
+```
 
 3. 将刚才构建的镜像标记版本
-
+```
 docker tag counsel-gpt:latest registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
+```
 
 4. 将标记版本的镜像上传阿里云镜像管理器
-   
+```
 docker push registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
+```
 
 ## 清理系统相关命令
-
+```
 sudo docker system prune
 
 sudo docker container ls -a
@@ -82,11 +87,12 @@ sudo apt-get clean
 sudo apt-get autoclean
 
 sudo apt-get autoremove
+```
 
 ## 最简单方式
-
+```
 ./clear_docker.sh
-
+```
 
 
 
