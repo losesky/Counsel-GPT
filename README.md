@@ -33,7 +33,6 @@ sudo systemctl restart docker
 ```
 docker build -f Dockerfile -t counsel-gpt:latest .
 docker run --gpus all -d --name counsel-gpt -p 8080:8080  counsel-gpt:latest
-
 ```
 
 ## 软件需求
