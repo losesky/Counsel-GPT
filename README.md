@@ -96,7 +96,3 @@ sudo apt-get autoremove
 ```
 ./clear_docker.sh
 ```
-
-
-
-

@@ -166,15 +166,11 @@ output/*
 log/*
 .chroma
 vector_store/*
-nltk_data/*
 content/*
 api_content/*
 knowledge_base/*
-
 package/*
-
 clear_docker.sh
 pyrightconfig.json
-
 loader/tmp_files
 flagged/*

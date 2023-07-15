@@ -346,7 +346,7 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
 if __name__ == "__main__":
     reload_javascript()
     demo.title = webui_title
-    local_url = demo.queue(concurrency_count=3).launch(
+    local_url = demo.queue(concurrency_count=10).launch(
             server_name='0.0.0.0',
             server_port=APP_PORT,
             show_api=False,

@@ -152,7 +152,7 @@ def get_answer(query, vs_path, history, mode, search_source, search_rang, score_
         history[-1][-1] += '\n'
         source = "\n".join(
                 [
-                    f"""<details style="margin-top: 10px" open><summary>出处[ {i + 1} ] - <a href="{doc.metadata["source"]}" target="_blank">{doc.metadata["filename"]}</a></summary>\n"""
+                    f"""<details style="margin-top: 10px"><summary>出处[ {i + 1} ] - <a href="{doc.metadata["source"]}" target="_blank">{doc.metadata["filename"]}</a></summary>\n"""
                     f"""<div style="font-size: 15px; line-height: 1.7; color:#aaa; margin: 5px 8px 0 8px">{doc.page_content}</div>\n"""
                     f"""</details>"""
                     for i, doc in
@@ -167,7 +167,7 @@ def get_answer(query, vs_path, history, mode, search_source, search_rang, score_
             yield history, "", status_text
         source = "\n".join(
                 [
-                    f"""<details style="margin-top: 10px" open><summary>出处[ {i + 1} ] - {shorten_str(os.path.split(doc.metadata["source"])[-1], 50)}</summary>\n"""
+                    f"""<details style="margin-top: 10px"><summary>出处[ {i + 1} ] - {shorten_str(os.path.split(doc.metadata["source"])[-1], 50)}</summary>\n"""
                     f"""<div style="font-size: 15px; line-height: 1.7; color:#aaa; margin: 5px 8px 0 8px">{str(doc.page_content)[:100]}...</div>\n"""
                     f"""</details>"""
                     for i, doc in
@@ -188,7 +188,7 @@ def get_answer(query, vs_path, history, mode, search_source, search_rang, score_
             else:
                 source = "\n".join(
                     [
-                        f"""<details style="margin-top: 10px" open><summary>相关度[ {int(doc.metadata["score"])} ] - 出处[ {i + 1} ] - {shorten_str(os.path.split(doc.metadata["source"])[-1], 50)}</summary>\n"""
+                        f"""<details style="margin-top: 10px"><summary>相关度[ {int(doc.metadata["score"])} ] - 出处[ {i + 1} ] - {shorten_str(os.path.split(doc.metadata["source"])[-1], 50)}</summary>\n"""
                         f"""<div style="font-size: 15px; line-height: 1.7; color:#aaa; margin: 5px 8px 0 8px">{str(doc.page_content)[:100]}...</div>\n"""
                         f"""</details>"""
                         for i, doc in

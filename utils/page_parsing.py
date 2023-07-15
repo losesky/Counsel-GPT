@@ -89,7 +89,7 @@ def init_firefox_driver(is_headless, proxy_host=None, proxy_port=None):
     # 实例化驱动
     system = platform.system()
     if system == "Windows":
-        executable_path = './resource/geckodriver.exe'
+        executable_path = './utils/geckodriver.exe'
     elif system == "Linux":
         executable_path = '/usr/local/bin/geckodriver'
     else:
