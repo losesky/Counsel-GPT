@@ -47,14 +47,13 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                         query = gr.Textbox(show_label=False,
                                    container=False,
                                    max_lines=3,
-                                   placeholder="请输入提问内容，按回车进行提交")
+                                   placeholder="请输入提问内容，按回车提交")
                     with gr.Column(min_width=42, scale=1):
                         submitBtn = gr.Button(value="", variant="primary", elem_id="submit_btn")
                         cancelBtn = gr.Button(value="", variant="secondary", visible=False, elem_id="cancel_btn")
             with gr.Column(scale=5):
                     # 问答模式
-                    dialog_tab = gr.Accordion(label="选择模式",
-                                                visible=True)
+                    dialog_tab = gr.Accordion(label="模式选择", visible=True, open=False)
                     with dialog_tab:
                         mode = gr.Dropdown(["通用对话", "在线问答", "专业问答", "知识库检索"],
                                                 label="请选择使用模式",
@@ -80,18 +79,18 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                              interactive=True)
                         
                     # 提示词模板
-                    prompt_tab = gr.Accordion(label="Prompt模板",
+                    prompt_tab = gr.Accordion(label="提示词模板",
                                               visible=True,
                                               open=False)
                     with prompt_tab:
                         templateFileSelectDropdown = gr.Dropdown(
-                                            label=("选择Prompt集合文件"),
+                                            label=("选择提示词集合文件"),
                                             choices=get_template_names(plain=True),
                                             multiselect=False,
                                             value=get_template_names(plain=True)[0],
                                         )
                         templateSelectDropdown = gr.Dropdown(
-                                            label=("选择Prompt模板"),
+                                            label=("选择提示词模板"),
                                             choices=load_template(
                                                 get_template_names(plain=True)[0],
                                                 mode=1
@@ -104,8 +103,8 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                                         )
                         systemPromptTxt = gr.Textbox(
                             show_label=True,
-                            placeholder=("在这里输入System Prompt..."),
-                            label="System prompt",
+                            placeholder=("在这里输入系统提示词..."),
+                            label="系统提示词",
                             value=SYSTEM_PROMPT,
                             lines=10,
                             max_lines=10,

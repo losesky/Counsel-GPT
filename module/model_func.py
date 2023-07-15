@@ -142,7 +142,7 @@ def get_answer(query, vs_path, history, mode, search_source, search_rang, score_
                chunk_size=CHUNK_SIZE, systemPromptTxt=PROMPT_TEMPLATE, streaming: bool = STREAMING):
     
     if query is None or len(query.strip()) == 0:
-        yield history, "", "请输入提问内容，按回车进行提交"
+        yield history, "", "请输入提问内容，按回车提交"
         return
         
     if mode == "在线问答":
@@ -423,11 +423,6 @@ def refresh_vs_list():
     # 获取知识库列表，并更新图形界面中的选择列表
     choices = get_vs_list()
     return gr.update(choices=choices), gr.update(choices=choices)
-
-def change_theme(demo):
-    logger.info(f'change_theme begin: {change_theme}')
-    demo.evaluate_js('toggleDarkMode(false)')
-    logger.info(f'change_theme over: {change_theme}')
 
 
 def delete_file(vs_id, files_to_delete, chatbot):

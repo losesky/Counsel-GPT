@@ -52,13 +52,6 @@ footer {
     margin-top: 10px;
 }
 /* status_display */
-#status_display {
-    display: flex;
-    min-height: 2em;
-    align-items: flex-end;
-    justify-content: flex-end;
-    white-space: wrap;
-}
 #status_display p {
     font-size: .85em;
     font-family: ui-monospace, "SF Mono", "SFMono-Regular", "Menlo", "Consolas", "Liberation Mono", "Microsoft Yahei UI", "Microsoft Yahei", monospace;
@@ -67,6 +60,9 @@ footer {
 #status_display {
     transition: all 0.6s;
     align-items: center;
+    display: flex;
+    min-height: 2.3em;
+    white-space: wrap;
 }
 /* usage_display */
 .insert_block {
@@ -290,24 +286,32 @@ ol:not(.options), ul:not(.options) {
     #chat-box #logs_chat {
         height: calc(100vh - 230px);
     }
-    
     #chat-box #logs_chat .wrap {
         max-height: calc(100vh - 230px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+    }
+    #app_title {
+        display: block;
+    }
+    #status_display {
+        justify-content: flex-end;
     }
 }
 /* 屏幕宽度小于500px的设备 */
 @media screen and (max-width: 499px) {
     #chat-box #logs_chat {
-        height: calc(100vh - 100px);
+        height: calc(100vh - 120px);
     }
     #chat-box #logs_chat .wrap {
-        max-height: calc(100vh - 100px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+        max-height: calc(100vh - 120px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
     }
     [data-testid = "bot"] {
         max-width: 95% !important;
     }
-    #app_title div{
-        letter-spacing: -1px; font-size: -2px;
+    #app_title {
+        display: none;
+    }
+    #status_display {
+        justify-content: flex-start;
     }
 }
 /* 对话气泡 */

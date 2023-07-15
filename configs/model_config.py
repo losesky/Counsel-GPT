@@ -10,7 +10,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 APP_NAME = "langchain-ChatGLM"
 APP_ENV = "development"
-APP_PORT = 7890
+APP_PORT = 8080
 logger = logging.getLogger(APP_NAME)
 logger.setLevel(logging.INFO)
 log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "log")

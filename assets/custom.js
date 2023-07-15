@@ -17,8 +17,6 @@ var targetNode = ga[0];
 var isInIframe = (window.self !== window.top);
 var language = navigator.language.slice(0,2);
 
-
-// gradio 页面加载好了么??? 我能动你的元素了么??
 function gradioLoaded(mutations) {
     for (var i = 0; i < mutations.length; i++) {
         if (mutations[i].addedNodes.length) {
@@ -26,9 +24,8 @@ function gradioLoaded(mutations) {
             chatbot = document.querySelector('#chat-box');
             chatbotWrap = document.querySelector('#chat-box > .wrap');
             apSwitch = document.querySelector('.apSwitch input[type="checkbox"]');
-            if (gradioContainer && apSwitch) {  // gradioCainter 加载出来了没?
+            if (gradioContainer && apSwitch) {
                 adjustDarkMode();
-                // 只在 apSwitch 元素上添加 click 事件监听器
                 apSwitch.addEventListener("click", (e) => {
                     toggleDarkMode(e.target.checked);
                 });
@@ -145,7 +142,7 @@ var mObserver = new MutationObserver(function (mutationsList) {
             }
         } else if (mmutation.type === 'attributes') {
             if (mmutation.target.nodeType === 1 && mmutation.target.classList.contains('message') && mmutation.target.getAttribute('data-testid') === 'bot') {
-                if (isThrottled) break; // 为了防止重复不断疯狂渲染，加上等待_(:з」∠)_
+                if (isThrottled) break;
                 isThrottled = true;
                 clearTimeout(timeoutId);
                 timeoutId = setTimeout(() => {
