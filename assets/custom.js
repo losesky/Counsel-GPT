@@ -11,7 +11,6 @@ var chatbot = null;
 var chatbotWrap = null;
 var apSwitch = null;
 var messageBotDivs = null;
-var historyLoaded = false;
 
 var ga = document.getElementsByTagName("gradio-app");
 var targetNode = ga[0];
@@ -29,10 +28,15 @@ function gradioLoaded(mutations) {
             apSwitch = document.querySelector('.apSwitch input[type="checkbox"]');
             if (gradioContainer && apSwitch) {  // gradioCainter 加载出来了没?
                 adjustDarkMode();
+                // 只在 apSwitch 元素上添加 click 事件监听器
+                apSwitch.addEventListener("click", (e) => {
+                    toggleDarkMode(e.target.checked);
+                });
             }
         }
     }
 }
+
 function toggleDarkMode(isEnabled) {
     if (isEnabled) {
         document.body.classList.add("dark");
@@ -44,20 +48,7 @@ function toggleDarkMode(isEnabled) {
 }
 
 function adjustDarkMode() {
-    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    // 根据当前颜色模式设置初始状态
-    apSwitch.checked = darkModeQuery.matches;
-    toggleDarkMode(darkModeQuery.matches);
-    // 监听颜色模式变化
-    darkModeQuery.addEventListener("change", (e) => {
-        apSwitch.checked = e.matches;
-        toggleDarkMode(e.matches);
-    });
-    // apSwitch = document.querySelector('.apSwitch input[type="checkbox"]');
-    apSwitch.addEventListener("change", (e) => {
-        toggleDarkMode(e.target.checked);
-    });
+    toggleDarkMode(apSwitch.checked);
 }
 
 function addChuanhuButton(botElement) {
@@ -160,14 +151,12 @@ var mObserver = new MutationObserver(function (mutationsList) {
                 timeoutId = setTimeout(() => {
                     isThrottled = false;
                     document.querySelectorAll('#chat-box>.wrap>.message-wrap .message.bot').forEach(addChuanhuButton);
-                    saveHistoryHtml();
                 }, 500);
             }
         }
     }
 });
 mObserver.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
-
 
 // 监视页面内部 DOM 变动
 var observer = new MutationObserver(function (mutations) {
@@ -178,7 +167,6 @@ observer.observe(targetNode, { childList: true, subtree: true });
 // 监视页面变化
 window.addEventListener("DOMContentLoaded", function () {
     isInIframe = (window.self !== window.top);
-    historyLoaded = false;
 });
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", adjustDarkMode);
 

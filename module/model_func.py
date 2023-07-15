@@ -19,7 +19,6 @@ def get_local_doc_qa():
 
 pre_token = 0
 def init_model():
-    
     """ 
     解析命令行参数，加载模型，初始化配置，并测试模型是否成功加载 
     """
@@ -37,13 +36,13 @@ def init_model():
         logger.info(history)
         logger.info(status_text)
         
-        reply = """模型已成功加载，可以开始对话，或从下方选择模式后开始对话"""
+        reply = """模型已成功加载，可以开始对话"""
         logger.info(reply)
         return reply
 
     except Exception as e:
         logger.error(e)
-        reply = """模型未成功加载，请到页面左上角【模型配置】选项卡中重新选择后点击【加载模型】按钮"""
+        reply = """⚠️模型未成功加载，请到页面左上角【模型配置】选项卡中重新选择后点击【加载模型】按钮"""
         
         if str(e) == "Unknown platform: darwin":
             logger.error("该报错可能因为您使用的是 macOS 操作系统，需先下载模型至本地后执行 Web UI，具体方法请参考项目 README 中本地部署方法及常见问题："
@@ -85,7 +84,7 @@ def reinit_model(llm_model, embedding_model, llm_history_len, no_remote_model, u
         logger.info(model_status)
     except Exception as e:
         logger.error(e)
-        model_status = """模型未成功重新加载，请到页面左上角【模型配置】选项卡中重新选择后点击【加载模型】按钮"""
+        model_status = """⚠️模型未成功重新加载，请到页面左上角【模型配置】选项卡中重新选择后点击【加载模型】按钮"""
         logger.error(model_status)
     
     return model_status
@@ -99,7 +98,7 @@ def cancel_outputing():
 def set_vector_store(vs_id, files, sentence_size):
     vs_id = str(vs_id)  # 将 vs_id 转换为字符串
     if '新建知识库' in vs_id:
-        return '未选择需要加载的知识库，无法新增内容'
+        return '⚠️未选择需要加载的知识库，无法新增内容'
     vs_path = os.path.join(KB_ROOT_PATH, vs_id, "vector_store")  # 构建向量存储的路径，并将结果保存在 vs_path 变量中
     filelist = []
     if local_doc_qa.llm and local_doc_qa.embeddings:  # 如果 LLM 模型和 embedding 模型都加载成功
@@ -110,18 +109,18 @@ def set_vector_store(vs_id, files, sentence_size):
                     shutil.move(file, os.path.join(KB_ROOT_PATH, vs_id, "content", filename))  # 文件移动到向量存储的 content 目录下
                     filelist.append(os.path.join(KB_ROOT_PATH, vs_id, "content", filename))
                 except Exception as e:
-                    file_status = f'"{filename}" 处理异常，跳过'
+                    file_status = f'"⚠️{filename}" 处理异常，跳过'
                     pass
             if len(filelist):
                 vs_path, loaded_files = local_doc_qa.init_knowledge_vector_store(filelist, vs_path, sentence_size)
                 if len(loaded_files):
                     file_status = f"已新增 {len(loaded_files)} 个内容，存储完毕"
                 else:
-                    file_status = "搜索结果未成功入库，请检查系统或重新检索"
+                    file_status = "⚠️搜索结果未成功入库，请检查系统或重新检索"
             else:
-                file_status = "搜索结果异常，请检查系统或重新检索"
+                file_status = "⚠️搜索结果异常，请检查系统或重新检索"
     else:
-        file_status = "模型未完成加载，请先在加载模型后再导入文件"
+        file_status = "⚠️模型未完成加载，请先在加载模型后再导入文件"
         vs_path = None
     
     return file_status
@@ -197,9 +196,9 @@ def get_answer(query, vs_path, history, mode, search_source, search_rang, score_
                 history.append([query, "以下内容为知识库中满足设置条件的匹配结果：\n\n" + source])
                 yield history, "", status_text
         else:
-            status_text = "请选择知识库后进行检索，当前未选择知识库。"
+            status_text = "⚠️请选择知识库后进行检索，当前未选择知识库。"
             yield history + [[query,
-                              "请选择知识库后进行检索，当前未选择知识库。"]], "", status_text
+                              "⚠️请选择知识库后进行检索，当前未选择知识库。"]], "", status_text
 
     else:
         for resp, history, status_text in local_doc_qa.get_general_answer(query=query, chat_history=history, systemPromptTxt=systemPromptTxt, streaming=streaming):
@@ -317,9 +316,9 @@ def get_vector_store(vs_id, files, sentence_size, history, one_conent, one_conte
         if len(loaded_files):
             file_status = f"已添加 {len(loaded_files)} 个内容，并已加载知识库，请开始提问"
         else:
-            file_status = "文件未成功加载，请重新上传文件"
+            file_status = "⚠️文件未成功加载，请重新上传文件"
     else:
-        file_status = "模型未完成加载，请先在加载模型后再导入文件"
+        file_status = "⚠️模型未完成加载，请先在加载模型后再导入文件"
         vs_path = None
     
     logger.info(file_status)
@@ -366,7 +365,7 @@ def change_vs_name_input(vs_id, history):
             )
         else:
             # 如果 vs_path 目录下不存在 "index.faiss" 文件，则表示知识库未上传文件
-            file_status = f"已选择知识库【{vs_id}】，但当前知识库中未上传文件，请先上传文件后，再开始提问"
+            file_status = f"⚠️已选择知识库【{vs_id}】，但当前知识库中未上传文件，请先上传文件后，再开始提问"
             return (
                 gr.update(visible=False),
                 gr.update(visible=False),
@@ -393,7 +392,7 @@ def select_vs_change(vs_id, history, mode):
             # 如果模式不是知识库检索，则更新可见性为False
             return vs_path, gr.update(visible=False), gr.update(visible=False), file_status
     else:
-        file_status = f"已选择知识库【{vs_id}】，但当前知识库中未上传文件，请先上传文件后，再开始提问"
+        file_status = f"⚠️已选择知识库【{vs_id}】，但当前知识库中未上传文件，请先上传文件后，再开始提问"
         return vs_path, gr.update(visible=False), gr.update(visible=False), file_status
         
         
@@ -414,7 +413,7 @@ def reinit_vector_store(vs_id, history):
         model_status = """知识库构建成功"""
     except Exception as e:
         logger.error(e)
-        model_status = """知识库构建未成功"""
+        model_status = """⚠️知识库构建未成功"""
         logger.error(model_status)
     # 返回更新后的历史记录，添加知识库构建状态
     return model_status
@@ -424,6 +423,11 @@ def refresh_vs_list():
     # 获取知识库列表，并更新图形界面中的选择列表
     choices = get_vs_list()
     return gr.update(choices=choices), gr.update(choices=choices)
+
+def change_theme(demo):
+    logger.info(f'change_theme begin: {change_theme}')
+    demo.evaluate_js('toggleDarkMode(false)')
+    logger.info(f'change_theme over: {change_theme}')
 
 
 def delete_file(vs_id, files_to_delete, chatbot):
@@ -453,7 +457,7 @@ def delete_file(vs_id, files_to_delete, chatbot):
     elif len(rested_files) > 0:
         vs_status = "文件删除成功"
     else:
-        vs_status = f"文件删除成功，知识库【{vs_id}】中无已资料，请先上传文件后，再开始提问"
+        vs_status = f"⚠️文件删除成功，知识库【{vs_id}】中无已资料，请先上传文件后，再开始提问"
     
     # 记录日志信息
     logger.info(",".join(files_to_delete) + vs_status)
@@ -489,7 +493,7 @@ def delete_vs(vs_id, chatbot):
         logger.error(e)
         
         # 设置删除失败的状态信息
-        status = f"删除知识库【{vs_id}】失败"
+        status = f"⚠️删除知识库【{vs_id}】失败"
         
         # 更新图形界面操作：按钮可见性、选择列表可见性、聊天记录可见性
         return (
@@ -516,7 +520,7 @@ def add_vs_name(vs_name):
         )
     elif vs_name in get_vs_list():
         # 如果输入的知识库名称与已有的知识库名称冲突
-        vs_status = "与已有知识库名称冲突，请重新选择其他名称后提交"
+        vs_status = "⚠️与已有知识库名称冲突，请重新选择其他名称后提交"
         
         # 更新图形界面操作：按钮可见性、选择列表可见性、聊天记录可见性
         return (

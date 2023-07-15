@@ -172,6 +172,12 @@ def retrieve_proxy(proxy=None):
         # return old proxy
         os.environ["HTTP_PROXY"], os.environ["HTTPS_PROXY"] = old_var
         
+def get_html(filename):
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "assets", "html", filename)
+    if os.path.exists(path):
+        with open(path, encoding="utf8") as file:
+            return file.read()
+    return ""
 
 def get_geoip():
     try:

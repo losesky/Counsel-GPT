@@ -26,10 +26,15 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
     promptTemplates = gr.State(load_template(get_template_names(plain=True)[0], mode=2))
     
     with gr.Row():
-        gr.Markdown(webui_title)
-        status_display = gr.Markdown(model_status.value, elem_id="status_display")
+        with gr.Column(min_width=219, scale=98):
+            with gr.Row():
+                gr.HTML(webui_title, elem_id="app_title")
+                status_display = gr.Markdown(model_status.value, elem_id="status_display")
+        with gr.Column(min_width=48, scale=1):
+            gr.HTML(get_html("appearance_switcher.html").format(label=""))
 
     dialog = gr.Tab("对话")
+    
     with dialog:
         with gr.Row():
             with gr.Column(scale=15):
@@ -41,38 +46,25 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                     with gr.Column(min_width=225, scale=12):
                         query = gr.Textbox(show_label=False,
                                    container=False,
+                                   max_lines=3,
                                    placeholder="请输入提问内容，按回车进行提交")
                     with gr.Column(min_width=42, scale=1):
-                        submitBtn = gr.Button(value=" 发送 ", variant="primary", elem_id="submit_btn")
-                        cancelBtn = gr.Button(value=" 取消 ", variant="secondary", visible=False, elem_id="cancel_btn")
+                        submitBtn = gr.Button(value="", variant="primary", elem_id="submit_btn")
+                        cancelBtn = gr.Button(value="", variant="secondary", visible=False, elem_id="cancel_btn")
             with gr.Column(scale=5):
                     # 问答模式
-                    dialog_tab = gr.Accordion(label="问答模式",
+                    dialog_tab = gr.Accordion(label="选择模式",
                                                 visible=True)
                     with dialog_tab:
                         mode = gr.Dropdown(["通用对话", "在线问答", "专业问答", "知识库检索"],
                                                 label="请选择使用模式",
                                                 interactive=True,
                                                 value="通用对话")
-                                                                      
                         select_vs_v1 = gr.Dropdown(get_vs_list(),
                                                 label="请选择要加载的知识库",
                                                 interactive=True,
                                                 visible=False,
                                                 value=get_vs_list()[0] if len(get_vs_list()) > 0 else None)
-                                              
-                        score_threshold = gr.Slider(0, 1000,
-                                                    value=VECTOR_SEARCH_SCORE_THRESHOLD,
-                                                    step=100,
-                                                    label="分值越低内容匹配度越高",
-                                                    interactive=True,
-                                                    visible=False)
-                        
-                        vector_search_top_k = gr.Number(value=VECTOR_SEARCH_TOP_K,
-                                                        precision=0,
-                                                        label="获取知识库内容条数",
-                                                        interactive=True,
-                                                        visible=False)
                         
                         search_source = gr.Radio(['Baidu - 百度','Google - 谷歌','Bing - 必应'],
                              label="信息来源",
@@ -89,7 +81,8 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                         
                     # 提示词模板
                     prompt_tab = gr.Accordion(label="Prompt模板",
-                                              visible=True)
+                                              visible=True,
+                                              open=False)
                     with prompt_tab:
                         templateFileSelectDropdown = gr.Dropdown(
                                             label=("选择Prompt集合文件"),
@@ -97,7 +90,6 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                                             multiselect=False,
                                             value=get_template_names(plain=True)[0],
                                         )
-                        
                         templateSelectDropdown = gr.Dropdown(
                                             label=("选择Prompt模板"),
                                             choices=load_template(
@@ -110,7 +102,6 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                                             )[0],
                                             multiselect=False,
                                         )
-                        
                         systemPromptTxt = gr.Textbox(
                             show_label=True,
                             placeholder=("在这里输入System Prompt..."),
@@ -119,12 +110,20 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                             lines=10,
                             max_lines=10,
                         )
-                        
-                        templateRefreshBtn = gr.Button(("🔄 刷新"))
-                        
-                        
+                        templateRefreshBtn = gr.Button(("🔄 刷新"), visible=False)
                         
                     # 隐藏参数
+                    score_threshold = gr.Slider(0, 1000,
+                                                    value=VECTOR_SEARCH_SCORE_THRESHOLD,
+                                                    step=100,
+                                                    label="分值越低内容匹配度越高",
+                                                    interactive=True,
+                                                    visible=False)
+                    vector_search_top_k = gr.Number(value=VECTOR_SEARCH_TOP_K,
+                                                    precision=0,
+                                                    label="获取知识库内容条数",
+                                                    interactive=True,
+                                                    visible=False)
                     chunk_conent = gr.Checkbox(value=True,
                                                 visible=False,
                                                 label="是否启用上下文关联",
@@ -135,8 +134,7 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                                             label="匹配单段内容的连接上下文后最大长度",
                                             interactive=True,
                                             visible=False)
-                    
-                    # systemPromptTxt.change(set_system_prompt, [systemPromptTxt], None)
+
                     templateRefreshBtn.click(get_template_names, None, [templateFileSelectDropdown])
                     
                     templateFileSelectDropdown.change(
@@ -165,19 +163,15 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                                 inputs=[select_vs_v1, chatbot, mode],
                                 outputs=[vs_path, score_threshold, vector_search_top_k, status_display])
                     
-                    # query.submit(get_answer,
-                    #                     [query, vs_path, chatbot, mode, score_threshold, vector_search_top_k, chunk_conent, chunk_sizes, systemPromptTxt],
-                    #                     [chatbot, query, status_display])
-                    
                     cancelBtn.click(cancel_outputing, [], []).then(end_outputing, [], [submitBtn, cancelBtn])
 
-                    query.submit(start_outputing, [], [submitBtn, cancelBtn]).then(get_answer,
+                    query.submit(start_outputing, [], [submitBtn, cancelBtn], show_progress=False).then(get_answer,
                                         [query, vs_path, chatbot, mode, search_source, search_rang, score_threshold, vector_search_top_k, chunk_conent, chunk_sizes, systemPromptTxt],
-                                        [chatbot, query, status_display]).then(end_outputing, [], [submitBtn, cancelBtn])
+                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=False)
 
-                    submitBtn.click(start_outputing, [], [submitBtn, cancelBtn]).then(get_answer,
+                    submitBtn.click(start_outputing, [], [submitBtn, cancelBtn], show_progress=False).then(get_answer,
                                         [query, vs_path, chatbot, mode, search_source, search_rang, score_threshold, vector_search_top_k, chunk_conent, chunk_sizes, systemPromptTxt],
-                                        [chatbot, query, status_display]).then(end_outputing, [], [submitBtn, cancelBtn])
+                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=False)
                     
                     
                     flag_csv_logger.setup([query, vs_path, chatbot, mode], "flagged")

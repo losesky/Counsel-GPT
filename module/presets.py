@@ -2,10 +2,18 @@
 import gradio as gr
 
 webui_title = """
-# Counsel-AI
+Counsel-GPT
 """
 
-init_message = (f"""欢迎使用 <b>Counsel-AI</b>！你可以轻松地向人工智能律师咨询法律问题，并获得准确的法律建议和指导。也可以根据需要，切换模式获得不同信息。""")
+theme_btn = """
+<button data-selected="false" type="button" aria-label="Change to light mode" aria-describedby="tooltip-:r5:">
+<svg xmlns="http://www.w3.org/2000/svg" display="inline-flex" height="20" width="20" viewBox="0 0 24 24">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.25C12.4142 2.25 12.75 2.58579 12.75 3V5C12.75 5.41421 12.4142 5.75 12 5.75C11.5858 5.75 11.25 5.41421 11.25 5V3C11.25 2.58579 11.5858 2.25 12 2.25ZM12 8.75C10.2051 8.75 8.75 10.2051 8.75 12C8.75 13.7949 10.2051 15.25 12 15.25C13.7949 15.25 15.25 13.7949 15.25 12C15.25 10.2051 13.7949 8.75 12 8.75ZM7.25 12C7.25 9.37665 9.37665 7.25 12 7.25C14.6234 7.25 16.75 9.37665 16.75 12C16.75 14.6234 14.6234 16.75 12 16.75C9.37665 16.75 7.25 14.6234 7.25 12ZM12.75 19C12.75 18.5858 12.4142 18.25 12 18.25C11.5858 18.25 11.25 18.5858 11.25 19V21C11.25 21.4142 11.5858 21.75 12 21.75C12.4142 21.75 12.75 21.4142 12.75 21V19ZM21.75 12C21.75 12.4142 21.4142 12.75 21 12.75H19C18.5858 12.75 18.25 12.4142 18.25 12C18.25 11.5858 18.5858 11.25 19 11.25H21C21.4142 11.25 21.75 11.5858 21.75 12ZM5 12.75C5.41421 12.75 5.75 12.4142 5.75 12C5.75 11.5858 5.41421 11.25 5 11.25H3C2.58579 11.25 2.25 11.5858 2.25 12C2.25 12.4142 2.58579 12.75 3 12.75H5ZM18.8943 5.10571C19.1872 5.3986 19.1872 5.87348 18.8943 6.16637L17.4801 7.58058C17.1872 7.87348 16.7124 7.87348 16.4195 7.58058C16.1266 7.28769 16.1266 6.81282 16.4195 6.51992L17.8337 5.10571C18.1266 4.81282 18.6014 4.81282 18.8943 5.10571ZM7.58062 17.4801C7.87352 17.1872 7.87352 16.7123 7.58062 16.4194C7.28773 16.1265 6.81286 16.1265 6.51996 16.4194L5.10575 17.8336C4.81286 18.1265 4.81286 18.6014 5.10575 18.8943C5.39864 19.1872 5.87352 19.1872 6.16641 18.8943L7.58062 17.4801ZM18.8942 18.8943C18.6013 19.1872 18.1265 19.1872 17.8336 18.8943L16.4194 17.4801C16.1265 17.1872 16.1265 16.7123 16.4194 16.4194C16.7122 16.1265 17.1871 16.1265 17.48 16.4194L18.8942 17.8336C19.1871 18.1265 19.1871 18.6014 18.8942 18.8943ZM6.51985 7.58056C6.81274 7.87346 7.28762 7.87346 7.58051 7.58056C7.8734 7.28767 7.8734 6.8128 7.58051 6.5199L6.1663 5.10569C5.8734 4.81279 5.39853 4.81279 5.10564 5.10569C4.81274 5.39858 4.81274 5.87345 5.10564 6.16635L6.51985 7.58056Z" fill="currentColor" fill-opacity="0.87"></path>
+</svg>
+</button>
+"""
+
+init_message = (f"""欢迎使用 <b>Counsel-GPT</b>！你可以轻松地向人工智能律师咨询法律问题，并获得准确的法律建议和指导。也可以根据需要，切换模式获得不同信息。""")
 
 knowledge_answer = (f"""你已进入【专业问答】模式，选择知识库名称后，即可开始问答。您输入的任何问题都将基于现有知识库做出回答，如有需要在【知识库配置】栏上传资料丰富知识库内容。""")
 
@@ -16,18 +24,17 @@ bing_answer = (f"""你已进入【在线问答】模式，你输入的任何问�
 
 small_and_beautiful_theme = gr.themes.Soft(
         primary_hue=gr.themes.Color(
-            c50="#EBFAF2",
-            c100="#CFF3E1",
-            c200="#A8EAC8",
-            c300="#77DEA9",
-            c400="#3FD086",
-            c500="#02C160",
-            c600="#06AE56",
-            c700="#05974E",
-            c800="#057F45",
-            c900="#04673D",
-            c950="#2E5541",
-            name="small_and_beautiful",
+            c50="#02C160",
+            c100="rgba(2, 193, 96, 0.2)",
+            c200="#02C160",
+            c300="rgba(2, 193, 96, 0.32)",
+            c400="rgba(2, 193, 96, 0.32)",
+            c500="rgba(2, 193, 96, 1.0)",
+            c600="rgba(2, 193, 96, 1.0)",
+            c700="rgba(2, 193, 96, 0.32)",
+            c800="rgba(2, 193, 96, 0.32)",
+            c900="#02C160",
+            c950="#02C160",
         ),
         secondary_hue=gr.themes.Color(
             c50="#576b95",
@@ -44,9 +51,8 @@ small_and_beautiful_theme = gr.themes.Soft(
         ),
         neutral_hue=gr.themes.Color(
             name="gray",
-            c50="#f6f7f8",
-            # c100="#f3f4f6",
-            c100="#F2F2F2",
+            c50="#f9fafb",
+            c100="#f3f4f6",
             c200="#e5e7eb",
             c300="#d1d5db",
             c400="#B2B2B2",
@@ -54,30 +60,25 @@ small_and_beautiful_theme = gr.themes.Soft(
             c600="#636363",
             c700="#515151",
             c800="#393939",
-            # c900="#272727",
-            c900="#2B2B2B",
+            c900="#272727",
             c950="#171717",
         ),
         radius_size=gr.themes.sizes.radius_sm,
     ).set(
-        # button_primary_background_fill="*primary_500",
-        button_primary_background_fill_dark="*primary_600",
-        # button_primary_background_fill_hover="*primary_400",
-        # button_primary_border_color="*primary_500",
-        button_primary_border_color_dark="*primary_600",
-        button_primary_text_color="wihte",
-        button_primary_text_color_dark="white",
-        button_secondary_background_fill="*neutral_100",
-        button_secondary_background_fill_hover="*neutral_50",
-        button_secondary_background_fill_dark="*neutral_900",
-        button_secondary_text_color="*neutral_800",
-        button_secondary_text_color_dark="white",
+        button_primary_background_fill="#06AE56",
+        button_primary_background_fill_dark="#06AE56",
+        button_primary_background_fill_hover="#07C863",
+        button_primary_border_color="#06AE56",
+        button_primary_border_color_dark="#06AE56",
+        button_primary_text_color="#FFFFFF",
+        button_primary_text_color_dark="#FFFFFF",
+        button_secondary_background_fill="#F2F2F2",
+        button_secondary_background_fill_dark="#2B2B2B",
+        button_secondary_text_color="#393939",
+        button_secondary_text_color_dark="#FFFFFF",
         # background_fill_primary="#F7F7F7",
         # background_fill_primary_dark="#1F1F1F",
-        # block_title_text_color="*primary_500",
-        block_title_background_fill_dark="*primary_900",
-        block_label_background_fill_dark="*primary_900",
+        block_title_text_color="*primary_500",
+        block_title_background_fill="*primary_100",
         input_background_fill="#F6F6F6",
-        chatbot_code_background_color="*neutral_950",
-        chatbot_code_background_color_dark="*neutral_950",
     )
