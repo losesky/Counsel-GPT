@@ -22,6 +22,7 @@
 ## Docker 部署
 
 为了能让容器使用主机GPU资源，需要在主机上安装 [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit)。具体安装步骤如下：
+
 ```shell
 sudo apt-get update
 sudo apt-get install -y nvidia-container-toolkit-base
@@ -30,7 +31,8 @@ sudo systemctl restart docker
 ```
 
 安装完成后，可以使用以下命令编译镜像和启动容器：
-```
+
+```shell
 docker build -f Dockerfile -t counsel-gpt:latest .
 docker run --gpus all -d --name counsel-gpt -p 8080:8080  counsel-gpt:latest
 ```
@@ -42,39 +44,44 @@ docker run --gpus all -d --name counsel-gpt -p 8080:8080  counsel-gpt:latest
 WebUI 可以实现如下功能：
 
 1. 运行前自动读取 `configs/model_config.py` 中 `LLM` 及 `Embedding` 模型枚举及默认模型设置运行模型，如需重新加载模型，可在 `模型配置` Tab 重新选择后点击 `重新加载模型` 进行模型加载
-   
+
 2. 可手动调节对话历史长度、匹配知识库文段数量，可根据显存大小自行调节
-   
+
 3. `对话` Tab 具备模式选择功能，可选择 `通用对话` 与 `专业问答` 模式进行对话，支持流式对话
-   
+
 4. 添加 `配置知识库` 功能，支持选择已有知识库或新建知识库，并可向知识库中**新增**上传文件/文件夹，使用文件上传组件选择好文件后点击 `上传文件并加载知识库`，会将所选上传文档数据加载至知识库中，并基于更新后知识库进行问答；
-   
+
 5. 新增 `知识库检索` Tab，可用于测试不同文本切分方法与检索相关度阈值设置。
 
 ## 如何制作docker镜像
 
 1. 构造镜像
-```
+
+```shell
 docker build -f Dockerfile -t counsel-gpt:latest .
 ```
 
 2. 登陆阿里云镜像管理器
-```
+
+```shell
 docker login --username=losesky77 registry.cn-shenzhen.aliyuncs.com
 ```
 
 3. 将刚才构建的镜像标记版本
-```
+
+```shell
 docker tag counsel-gpt:latest registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
 ```
 
 4. 将标记版本的镜像上传阿里云镜像管理器
-```
+
+```shell
 docker push registry.cn-shenzhen.aliyuncs.com/losesky/counsel_gpt:1.0.0
 ```
 
 ## 清理系统相关命令
-```
+
+```shell
 sudo docker system prune
 
 sudo docker container ls -a
@@ -93,6 +100,7 @@ sudo apt-get autoremove
 ```
 
 ## 最简单方式
-```
+
+```shell
 ./clear_docker.sh
 ```
