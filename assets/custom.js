@@ -36,11 +36,11 @@ function gradioLoaded(mutations) {
 
 function toggleDarkMode(isEnabled) {
     if (isEnabled) {
-        document.body.classList.add("dark");
-        document.body.style.setProperty("background-color", "var(--neutral-950)", "important");
-    } else {
         document.body.classList.remove("dark");
         document.body.style.backgroundColor = "";
+    } else {
+        document.body.classList.add("dark");
+        document.body.style.setProperty("background-color", "var(--neutral-950)", "important");
     }
 }
 
