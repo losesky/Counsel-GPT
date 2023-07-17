@@ -99,8 +99,7 @@ sudo apt-get autoclean
 sudo apt-get autoremove
 ```
 
-## 最简单方式
-
-```shell
+## 最简单清理方式
+```
 ./clear_docker.sh
 ```
