@@ -237,3 +237,6 @@ if not logs.hasHandlers():
 # Custom Search API
 GOOGLE_CSE_ID = 'a6e3d6e8c75ab4f57'
 GOOGLE_API_KEY = 'AIzaSyCuab7cY7_9Fd9PgeyU2MJjQoAhjW0Q3w4'
+
+# is_manager
+is_manager = False
