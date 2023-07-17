@@ -217,6 +217,8 @@ def change_mode(mode, history, vs_id):
             gr.update(visible=False),
             gr.update(visible=False),
             gr.update(visible=False),
+            gr.update(visible=False),
+            gr.update(visible=False),
             [[None, init_message]] + [[None, knowledge_answer]]
         )
     elif mode == "知识库检索":
@@ -224,6 +226,8 @@ def change_mode(mode, history, vs_id):
             # 更新可见性，将知识库检索组件设置为可见，其他组件设置为不可见
             return (
                 gr.update(visible=True),
+                gr.update(visible=False),
+                gr.update(visible=False),
                 gr.update(visible=False),
                 gr.update(visible=False),
                 gr.update(visible=False),
@@ -240,11 +244,15 @@ def change_mode(mode, history, vs_id):
                 gr.update(visible=False),
                 gr.update(visible=False),
                 gr.update(visible=False),
+                gr.update(visible=False),
+                gr.update(visible=False),
                 [[None, init_message]] + [[None, kowledge_retrieval]]
             )
     elif mode == "在线问答":
         # 更新可见性，将在线问答组件设置为不可见，其他组件也设置为不可见
         return (
+            gr.update(visible=False),
+            gr.update(visible=False),
             gr.update(visible=False),
             gr.update(visible=False),
             gr.update(visible=False),
@@ -259,6 +267,8 @@ def change_mode(mode, history, vs_id):
             gr.update(visible=False),
             gr.update(visible=False),
             gr.update(visible=False),
+            gr.update(visible=True),
+            gr.update(visible=True),
             gr.update(visible=True),
             gr.update(visible=False),
             gr.update(visible=False),
@@ -285,7 +295,12 @@ def change_chunk_conent(mode, label_conent, history):
             gr.update(visible=False),
             f"已关闭{conent}"
         )
-    
+
+def change_prompt(templateSelect):
+    current_role = USER_PROMPT.format(role=templateSelect)
+    return (
+            [[None, current_role]]
+        )
     
 def get_vector_store(vs_id, files, sentence_size, history, one_conent, one_content_segmentation):
     """

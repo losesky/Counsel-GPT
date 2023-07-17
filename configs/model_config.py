@@ -10,7 +10,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 APP_NAME = "langchain-ChatGLM"
 APP_ENV = "development"
-APP_PORT = 7890
+APP_PORT = 8080
 logger = logging.getLogger(APP_NAME)
 logger.setLevel(logging.INFO)
 log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "log")
@@ -137,6 +137,10 @@ bot:{bot}
 
 # 基于上下文的prompt模版
 SYSTEM_PROMPT = """我要你充当我的法律顾问，能针对问题提供全面准确的法律建议和指导，并能完成法律信息检索、合同的编写和审核以及其他与法律相关的智能问答服务。"""
+
+USER_PROMPT = """
+欢迎使用 <b>Counsel-GPT</b>！我将{role} ，为你提供全面准确的智能问答服务。你也可以根据需要，切换模式获得不同信息。
+"""
 
 TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "templates")
 

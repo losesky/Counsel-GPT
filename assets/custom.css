@@ -248,7 +248,7 @@ hr.append-display {
 }
 
 #chat-box{
-    height: calc(100vh - 230px) !important;
+    /* height: calc(100vh - 230px) !important; */
     transition: all 0.6s;
 }
 #chat-box .wrap {
@@ -282,12 +282,12 @@ ol:not(.options), ul:not(.options) {
 }
 /* 屏幕宽度大于等于500px的设备 */
 /* update on 2023.4.8: 高度的细致调整已写入JavaScript */
-@media screen and (min-width: 500px) {
-    #chat-box #logs_chat {
-        height: calc(100vh - 230px);
+@media screen and (min-width: 768px) {
+    #chat-box {
+        height: calc(100vh - 165px) !important;
     }
-    #chat-box #logs_chat .wrap {
-        max-height: calc(100vh - 230px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+    #chat-box {
+        max-height: calc(100vh - 165px - var(--line-sm)*1rem - 2*var(--block-label-margin)) !important;
     }
     #app_title {
         display: block;
@@ -297,12 +297,12 @@ ol:not(.options), ul:not(.options) {
     }
 }
 /* 屏幕宽度小于500px的设备 */
-@media screen and (max-width: 499px) {
-    #chat-box #logs_chat {
-        height: calc(100vh - 120px);
+@media screen and (max-width: 767px) {
+    #chat-box{
+        height: calc(100vh - 245px) !important;
     }
-    #chat-box #logs_chat .wrap {
-        max-height: calc(100vh - 120px - var(--line-sm)*1rem - 2*var(--block-label-margin) );
+    #chat-box .wrap {
+        max-height: calc(100vh - 245px - var(--line-sm)*1rem - 2*var(--block-label-margin)) !important;
     }
     [data-testid = "bot"] {
         max-width: 95% !important;

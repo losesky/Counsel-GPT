@@ -79,12 +79,13 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                              interactive=True)
                         
                     # 提示词模板
-                    prompt_tab = gr.Accordion(label="提示词模板",
-                                              visible=True,
-                                              open=False)
-                    with prompt_tab:
+                    # prompt_tab = gr.Accordion(label="提示词模板",
+                    #                           visible=True,
+                    #                           open=False)
+                    # with prompt_tab:
                         templateFileSelectDropdown = gr.Dropdown(
                                             label=("选择提示词集合文件"),
+                                            visible=False,
                                             choices=get_template_names(plain=True),
                                             multiselect=False,
                                             value=get_template_names(plain=True)[0],
@@ -153,10 +154,12 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                     chunk_conent.change(fn=change_chunk_conent,
                                         inputs=[chunk_conent, gr.Textbox(value="chunk_conent", visible=False), chatbot],
                                         outputs=[chunk_sizes, status_display])
-                    
+                    systemPromptTxt.change(fn=change_prompt,
+                                        inputs=[templateSelectDropdown],
+                                        outputs=[chatbot])
                     mode.change(fn=change_mode,
                                 inputs=[mode, chatbot, select_vs_v1],
-                                outputs=[select_vs_v1, score_threshold, vector_search_top_k, prompt_tab, search_source, search_rang, chatbot])
+                                outputs=[select_vs_v1, score_threshold, vector_search_top_k, templateFileSelectDropdown, templateSelectDropdown, systemPromptTxt, search_source, search_rang, chatbot])
                     
                     select_vs_v1.change(fn=select_vs_change,
                                 inputs=[select_vs_v1, chatbot, mode],
@@ -164,13 +167,13 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                     
                     cancelBtn.click(cancel_outputing, [], []).then(end_outputing, [], [submitBtn, cancelBtn])
 
-                    query.submit(start_outputing, [], [submitBtn, cancelBtn], show_progress=False).then(get_answer,
+                    query.submit(start_outputing, [], [submitBtn, cancelBtn], show_progress=True).then(get_answer,
                                         [query, vs_path, chatbot, mode, search_source, search_rang, score_threshold, vector_search_top_k, chunk_conent, chunk_sizes, systemPromptTxt],
-                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=False)
+                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=True)
 
-                    submitBtn.click(start_outputing, [], [submitBtn, cancelBtn], show_progress=False).then(get_answer,
+                    submitBtn.click(start_outputing, [], [submitBtn, cancelBtn], show_progress=True).then(get_answer,
                                         [query, vs_path, chatbot, mode, search_source, search_rang, score_threshold, vector_search_top_k, chunk_conent, chunk_sizes, systemPromptTxt],
-                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=False)
+                                        [chatbot, query, status_display], show_progress=False).then(end_outputing, [], [submitBtn, cancelBtn], show_progress=True)
                     
                     
                     flag_csv_logger.setup([query, vs_path, chatbot, mode], "flagged")

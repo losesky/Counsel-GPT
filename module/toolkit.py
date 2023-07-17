@@ -262,7 +262,7 @@ def remove_html_tags(text):
 # 去掉 HTML 标签
 def remove_all_html_tags(text):
     if text is None:
-        return None
+        return ''
     message_html = remove_newlines_and_spaces(html.unescape(text).strip())
     if 'user-message' in message_html:
         match = re.search(r'<div class="user-message">(.*?)</div>', message_html)
@@ -276,7 +276,7 @@ def remove_all_html_tags(text):
             # Remove <details> tag and its content
             message = re.sub(r'<details.*', '', message, flags=re.DOTALL)
             return re.sub('<.*?>', '', message)
-    return None
+    return ''
 
 def remove_newlines_and_spaces(text):
     # 去掉换行符和连续的空格
