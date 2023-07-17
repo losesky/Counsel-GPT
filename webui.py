@@ -78,11 +78,6 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
                              visible=False,
                              interactive=True)
                         
-                    # 提示词模板
-                    # prompt_tab = gr.Accordion(label="提示词模板",
-                    #                           visible=True,
-                    #                           open=False)
-                    # with prompt_tab:
                         templateFileSelectDropdown = gr.Dropdown(
                                             label=("选择提示词集合文件"),
                                             visible=False,
@@ -190,7 +185,6 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
         vs_add = gr.Button(value="添加至知识库", visible=True)
         vs_refresh = gr.Button("更新本知识库", visible=False)
         vs_delete = gr.Button("删除本知识库", visible=False)
-        # load_knowlege_button = gr.Button("重新构建知识库", visible=False)  # 待处理
         file2vs = gr.Column(visible=False)
         with file2vs:
             gr.Markdown("向知识库中添加单条内容或文件", visible=False)
@@ -281,54 +275,54 @@ with gr.Blocks(css=customCSS, theme=small_and_beautiful_theme) as demo:
             spider_btn.click(run_crawling, [spider_url, keywords, logs_chat, select_vs_v2, vs_path, sentence_size], [logs_chat, spider_btn, clear_btn, files_to_delete])
             clear_btn.click(init_all, None, [spider_btn, clear_btn])
                 
-    with gr.Tab("模型配置"):
-        llm_model = gr.Radio(llm_model_dict_list,
-                             label="LLM Models",
-                             value=LLM_MODEL,
-                             interactive=True)
+    # with gr.Tab("模型配置"):
+    #     llm_model = gr.Radio(llm_model_dict_list,
+    #                          label="LLM Models",
+    #                          value=LLM_MODEL,
+    #                          interactive=True)
         
-        no_remote_model = gr.Checkbox(shared.LoaderCheckPoint.no_remote_model,
-                                      label="加载本地模型",
-                                      interactive=True)
+    #     no_remote_model = gr.Checkbox(shared.LoaderCheckPoint.no_remote_model,
+    #                                   label="加载本地模型",
+    #                                   interactive=True)
 
-        llm_history_len = gr.Slider(0, 10,
-                                    value=LLM_HISTORY_LEN,
-                                    step=1,
-                                    label="通用对话轮数",
-                                    interactive=True)
+    #     llm_history_len = gr.Slider(0, 10,
+    #                                 value=LLM_HISTORY_LEN,
+    #                                 step=1,
+    #                                 label="通用对话轮数",
+    #                                 interactive=True)
         
-        use_ptuning_v2 = gr.Checkbox(USE_PTUNING_V2,
-                                     label="使用p-tuning-v2微调过的模型",
-                                     visible=False,
-                                     interactive=True)
+    #     use_ptuning_v2 = gr.Checkbox(USE_PTUNING_V2,
+    #                                  label="使用p-tuning-v2微调过的模型",
+    #                                  visible=False,
+    #                                  interactive=True)
         
-        use_lora = gr.Checkbox(USE_LORA,
-                               label="使用lora微调的权重",
-                               visible=False,
-                               interactive=True)
+    #     use_lora = gr.Checkbox(USE_LORA,
+    #                            label="使用lora微调的权重",
+    #                            visible=False,
+    #                            interactive=True)
         
-        embedding_model = gr.Radio(embedding_model_dict_list,
-                                   label="Embedding Models",
-                                   value=EMBEDDING_MODEL,
-                                   interactive=True)
+    #     embedding_model = gr.Radio(embedding_model_dict_list,
+    #                                label="Embedding Models",
+    #                                value=EMBEDDING_MODEL,
+    #                                interactive=True)
         
-        temperature = gr.Slider(
-                            minimum=0.01,
-                            maximum=0.5,
-                            value=0.01,
-                            step=0.01,
-                            interactive=True,
-                            label="Temperature"
-                        )
+    #     temperature = gr.Slider(
+    #                         minimum=0.01,
+    #                         maximum=0.5,
+    #                         value=0.01,
+    #                         step=0.01,
+    #                         interactive=True,
+    #                         label="Temperature"
+    #                     )
         
-        top_k = gr.Slider(1, 20, value=VECTOR_SEARCH_TOP_K, step=1,
-                          label="向量匹配 top k", interactive=True)
+    #     top_k = gr.Slider(1, 20, value=VECTOR_SEARCH_TOP_K, step=1,
+    #                       label="向量匹配 top k", interactive=True)
         
-        load_model_button = gr.Button("重新加载模型")
+    #     load_model_button = gr.Button("重新加载模型")
         
-        load_model_button.click(reinit_model, show_progress=True,
-                                inputs=[llm_model, embedding_model, llm_history_len, no_remote_model, use_ptuning_v2,
-                                        use_lora, temperature, top_k, chatbot], outputs=status_display)
+    #     load_model_button.click(reinit_model, show_progress=True,
+    #                             inputs=[llm_model, embedding_model, llm_history_len, no_remote_model, use_ptuning_v2,
+    #                                     use_lora, temperature, top_k, chatbot], outputs=status_display)
         
     demo.load(
         fn=refresh_vs_list,
